@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F.G.S. SERVICE — Συνεργείο Αυτοκινήτων Κοζάνη</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --steel:#22262b;
+    --steel-2:#2c3138;
+    --concrete:#dcd8cf;
+    --paper:#f2efe7;
+    --red:#c8102e;
+    --red-dark:#970d23;
+    --yellow:#f2b705;
+    --graphite:#4b4f55;
+    --ink:#1c1e21;
+    --off-white:#f5f3ee;
+    --line: rgba(255,255,255,0.12);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    line-height:1.5;
+  }
+  h1,h2,h3,.display{
+    font-family:'Oswald',sans-serif;
+    text-transform:uppercase;
+    letter-spacing:0.02em;
+  }
+  .mono{ font-family:'JetBrains Mono',monospace; }
+  a{color:inherit;}
+  img{max-width:100%;display:block;}
+
+  .hazard{
+    height:14px;
+    background:repeating-linear-gradient(135deg, var(--yellow) 0 22px, var(--steel) 22px 44px);
+  }
+
+  header.nav{
+    position:sticky; top:0; z-index:50;
+    background:var(--steel);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    max-width:1180px; margin:0 auto; padding:16px 24px;
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+  }
+  .brand{
+    display:flex; align-items:center; gap:12px;
+    color:var(--off-white);
+  }
+  .brand-mark{ width:40px;height:40px;flex:0 0 auto; }
+  .brand-name{ font-size:20px; font-weight:700; color:var(--off-white); letter-spacing:0.04em;}
+  .brand-sub{ font-size:11px; color:var(--concrete); font-family:'JetBrains Mono',monospace; letter-spacing:0.03em; text-transform:none;}
+  nav.links{ display:flex; gap:26px; }
+  nav.links a{
+    color:var(--concrete); text-decoration:none; font-size:14px; font-weight:500;
+    text-transform:uppercase; letter-spacing:0.06em;
+    border-bottom:2px solid transparent; padding-bottom:4px;
+    transition:border-color .15s, color .15s;
+  }
+  nav.links a:hover{ color:var(--off-white); border-color:var(--red); }
+  .cta-btn{
+    background:var(--red); color:#fff; padding:10px 18px;
+    font-family:'Oswald',sans-serif; text-transform:uppercase; letter-spacing:0.05em;
+    font-size:14px; font-weight:600; text-decoration:none;
+    border:none; cursor:pointer; white-space:nowrap;
+    transition:background .15s;
+    clip-path: polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
+  }
+  .cta-btn:hover{ background:var(--red-dark); }
+  @media (max-width:860px){ nav.links{display:none;} }
+
+  .hero{
+    background:var(--steel);
+    color:var(--off-white);
+    position:relative;
+    overflow:hidden;
+    padding:72px 24px 56px;
+  }
+  .hero-inner{
+    max-width:1180px; margin:0 auto;
+    display:grid; grid-template-columns:1.2fr 0.8fr; gap:40px; align-items:center;
+  }
+  @media (max-width:900px){ .hero-inner{grid-template-columns:1fr;} }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.08em;
+    color:var(--yellow); margin-bottom:18px; text-transform:uppercase;
+  }
+  .eyebrow::before{content:"●"; color:var(--red); font-size:10px;}
+  .hero h1{
+    font-size:clamp(38px,6vw,64px); line-height:1.02; font-weight:700;
+    margin-bottom:20px;
+  }
+  .hero h1 span{ color:var(--red); }
+  .hero p.lede{
+    font-size:17px; color:var(--concrete); max-width:52ch; margin-bottom:28px;
+  }
+  .hero-actions{ display:flex; gap:14px; flex-wrap:wrap; }
+  .btn-outline{
+    border:2px solid var(--off-white); color:var(--off-white); background:transparent;
+    padding:12px 22px; text-decoration:none; font-family:'Oswald',sans-serif;
+    text-transform:uppercase; letter-spacing:0.05em; font-weight:600; font-size:14px;
+  }
+  .btn-outline:hover{ background:var(--off-white); color:var(--steel); }
+  .btn-solid{
+    background:var(--red); color:#fff; padding:12px 22px; text-decoration:none;
+    font-family:'Oswald',sans-serif; text-transform:uppercase; letter-spacing:0.05em;
+    font-weight:600; font-size:14px;
+  }
+  .btn-solid:hover{ background:var(--red-dark); }
+
+  .plate{
+    background:var(--steel-2); border:1px solid var(--line); padding:26px;
+    font-family:'JetBrains Mono',monospace;
+  }
+  .plate-rating{ display:flex; align-items:baseline; gap:10px; margin-bottom:6px;}
+  .plate-rating .num{ font-size:44px; font-weight:700; color:var(--yellow); font-family:'Oswald',sans-serif;}
+  .plate-rating .stars{ color:var(--yellow); font-size:18px; letter-spacing:2px;}
+  .plate-sub{ color:var(--concrete); font-size:13px; margin-bottom:18px;}
+  .plate hr{ border:none; border-top:1px solid var(--line); margin:16px 0;}
+  .plate-row{ display:flex; justify-content:space-between; font-size:13px; color:var(--concrete); padding:5px 0;}
+  .plate-row b{ color:var(--off-white); font-weight:500;}
+  .status-open{ color:#8fd19e; }
+
+  section{ padding:72px 24px; }
+  .section-inner{ max-width:1180px; margin:0 auto; }
+  .section-head{ margin-bottom:40px; max-width:60ch; }
+  .section-head .eyebrow{ color:var(--red); }
+  .section-head .eyebrow::before{color:var(--yellow);}
+  .section-head h2{ font-size:clamp(28px,4vw,42px); font-weight:700; margin-bottom:14px; color:var(--ink);}
+  .section-head p{ color:var(--graphite); font-size:16px; }
+
+  .about{ background:var(--paper); }
+  .about-grid{ display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:start;}
+  @media (max-width:860px){ .about-grid{grid-template-columns:1fr;} }
+  .about-text p{ color:var(--graphite); margin-bottom:16px; font-size:16px;}
+  .tag-row{ display:flex; flex-wrap:wrap; gap:10px; margin-top:20px;}
+  .tag{
+    font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.03em;
+    border:1.5px solid var(--ink); padding:6px 12px; text-transform:uppercase;
+  }
+  .fact-card{
+    background:var(--steel); color:var(--off-white); padding:28px;
+    border-left:6px solid var(--red);
+  }
+  .fact-card h3{ font-size:18px; margin-bottom:14px; color:var(--yellow);}
+  .fact-list{ list-style:none; }
+  .fact-list li{
+    display:flex; justify-content:space-between; padding:10px 0;
+    border-bottom:1px solid var(--line); font-size:14px; gap:16px;
+  }
+  .fact-list li:last-child{ border-bottom:none; }
+  .fact-list .k{ color:var(--concrete); white-space:nowrap;}
+  .fact-list .v{ font-family:'JetBrains Mono',monospace; text-align:right;}
+
+  .services{ background:var(--steel); color:var(--off-white); }
+  .services .section-head h2{ color:var(--off-white);}
+  .services .section-head p{ color:var(--concrete);}
+  .svc-grid{
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:2px;
+    background:var(--line);
+  }
+  .svc-card{ background:var(--steel-2); padding:26px; transition:background .15s; }
+  .svc-card:hover{ background:#363c44; }
+  .svc-icon{ width:34px; height:34px; margin-bottom:16px; color:var(--yellow);}
+  .svc-card h3{ font-size:16px; margin-bottom:8px; font-weight:600; text-transform:none; letter-spacing:0; font-family:'Inter',sans-serif;}
+  .svc-card p{ font-size:13.5px; color:var(--concrete);}
+
+  .reviews{ background:var(--concrete); }
+  .rev-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+  @media (max-width:900px){ .rev-grid{grid-template-columns:1fr;} }
+  .rev-card{ background:var(--paper); padding:26px; border-top:4px solid var(--red); }
+  .rev-stars{ color:var(--red); font-size:14px; margin-bottom:14px; letter-spacing:2px;}
+  .rev-card p.quote{ font-size:15px; color:var(--ink); margin-bottom:18px; }
+  .rev-name{ font-family:'JetBrains Mono',monospace; font-size:12.5px; color:var(--graphite); text-transform:uppercase;}
+
+  .booking{ background:var(--ink); color:var(--off-white); }
+  .booking .section-head h2{ color:var(--off-white);}
+  .booking .section-head p{ color:var(--concrete);}
+  .book-wrap{
+    display:grid; grid-template-columns:1.3fr 1fr; gap:0;
+    background:var(--steel-2); border:1px solid var(--line);
+  }
+  @media (max-width:960px){ .book-wrap{grid-template-columns:1fr;} }
+  .book-form{ padding:32px; border-right:1px solid var(--line);}
+  @media (max-width:960px){ .book-form{border-right:none; border-bottom:1px solid var(--line);} }
+  .book-summary{ padding:32px; }
+
+  .field{ margin-bottom:20px; }
+  .field label{
+    display:block; font-family:'JetBrains Mono',monospace; font-size:11.5px;
+    text-transform:uppercase; letter-spacing:0.06em; color:var(--yellow); margin-bottom:8px;
+  }
+  .field input, .field select, .field textarea{
+    width:100%; background:var(--steel); border:1px solid var(--line); color:var(--off-white);
+    padding:12px 14px; font-family:'Inter',sans-serif; font-size:14.5px;
+  }
+  .field textarea{ resize:vertical; min-height:70px;}
+  .field input:focus, .field select:focus, .field textarea:focus{
+    outline:2px solid var(--red); outline-offset:1px;
+  }
+
+  .day-strip{ display:flex; gap:8px; flex-wrap:wrap; }
+  .day-pill{
+    background:var(--steel); border:1.5px solid var(--line); color:var(--concrete);
+    padding:10px 6px; font-family:'JetBrains Mono',monospace; font-size:12px;
+    text-align:center; cursor:pointer; min-width:64px; line-height:1.3;
+  }
+  .day-pill .dow{ display:block; font-weight:700; color:var(--off-white); font-size:12.5px;}
+  .day-pill:hover{ border-color:var(--yellow); }
+  .day-pill.active{ background:var(--red); border-color:var(--red); color:#fff; }
+  .day-pill.active .dow{ color:#fff; }
+
+  .slot-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(74px,1fr)); gap:8px; }
+  .slot{
+    background:var(--steel); border:1.5px solid var(--line); color:var(--concrete);
+    padding:9px 4px; font-family:'JetBrains Mono',monospace; font-size:12.5px;
+    text-align:center; cursor:pointer;
+  }
+  .slot:hover{ border-color:var(--yellow); }
+  .slot.active{ background:var(--yellow); border-color:var(--yellow); color:var(--ink); font-weight:700;}
+
+  .punch-note{ font-size:12px; color:var(--concrete); margin-top:10px; }
+
+  .summary-ticket{
+    border:1.5px dashed var(--line); padding:20px; font-family:'JetBrains Mono',monospace;
+    font-size:13px; color:var(--concrete);
+  }
+  .summary-ticket .row{ display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px dotted var(--line); gap:10px;}
+  .summary-ticket .row span:last-child{ color:var(--off-white); text-align:right;}
+  .summary-ticket .row:last-child{ border-bottom:none;}
+
+  .send-btn{
+    width:100%; margin-top:22px; background:var(--red); color:#fff; border:none;
+    padding:15px; font-family:'Oswald',sans-serif; text-transform:uppercase;
+    letter-spacing:0.06em; font-weight:700; font-size:15px; cursor:pointer;
+  }
+  .send-btn:hover{ background:var(--red-dark); }
+  .send-btn:disabled{ background:var(--graphite); cursor:not-allowed; }
+  .fallback-note{ font-size:12px; color:var(--concrete); margin-top:12px; line-height:1.5;}
+  .fallback-note a{ color:var(--yellow); text-decoration:underline;}
+
+  .location{ background:var(--paper); }
+  .loc-grid{ display:grid; grid-template-columns:1fr 1fr; gap:48px; }
+  @media (max-width:860px){ .loc-grid{grid-template-columns:1fr;} }
+  .loc-card{ background:var(--steel); color:var(--off-white); padding:30px;}
+  .loc-card h3{ color:var(--yellow); font-size:18px; margin-bottom:18px;}
+  .loc-line{ display:flex; gap:14px; padding:12px 0; border-bottom:1px solid var(--line); font-size:14.5px;}
+  .loc-line:last-child{ border-bottom:none;}
+  .loc-line svg{ width:20px; height:20px; flex:0 0 auto; color:var(--red); margin-top:2px;}
+  .loc-line .v{ color:var(--concrete); }
+  .loc-line .v b{ color:var(--off-white); }
+  .map-btn{
+    display:inline-block; margin-top:16px; background:var(--yellow); color:var(--ink);
+    padding:10px 16px; text-decoration:none; font-family:'Oswald',sans-serif;
+    text-transform:uppercase; font-weight:700; font-size:13px; letter-spacing:0.04em;
+  }
+  .hours-table{ width:100%; border-collapse:collapse; font-family:'JetBrains Mono',monospace; font-size:14px;}
+  .hours-table td{ padding:10px 0; border-bottom:1px solid var(--concrete); }
+  .hours-table td:last-child{ text-align:right; font-weight:700;}
+  .hours-table tr.today td{ color:var(--red); }
+
+  footer{
+    background:var(--steel); color:var(--concrete); padding:36px 24px;
+    font-size:13px; text-align:center; border-top:1px solid var(--line);
+  }
+  footer b{ color:var(--off-white); }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="2" y="2" width="44" height="44" fill="#c8102e"/>
+        <path d="M10 30 L14 18 H34 L38 30 V34 H10 Z" fill="#f5f3ee"/>
+        <circle cx="16" cy="34" r="3.5" fill="#22262b"/>
+        <circle cx="32" cy="34" r="3.5" fill="#22262b"/>
+        <rect x="18" y="20" width="12" height="6" fill="#c8102e"/>
+      </svg>
+      <div>
+        <div class="brand-name">F.G.S. SERVICE</div>
+        <div class="brand-sub">ΣΠΑΝΟΣ Ι. — ΓΚΙΟΥΡΑΣ Ν. Ο.Ε. · ΚΟΖΑΝΗ</div>
+      </div>
+    </div>
+    <nav class="links">
+      <a href="#about">Το συνεργείο</a>
+      <a href="#services">Υπηρεσίες</a>
+      <a href="#reviews">Κριτικές</a>
+      <a href="#booking">Ραντεβού</a>
+      <a href="#location">Τοποθεσία</a>
+    </nav>
+    <a class="cta-btn" href="#booking">Κλείστε ραντεβού</a>
+  </div>
+</header>
+<div class="hazard"></div>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="eyebrow">Εξειδικευμένο συνεργείο Nissan · Κοζάνη</div>
+      <h1>Το αμάξι σου,<br>στα χέρια<span> ανθρώπων</span><br>που το ξέρουν.</h1>
+      <p class="lede">Γενικό συνεργείο αυτοκινήτων στην Κοζάνη με εξειδίκευση στα Nissan. Διάγνωση, επισκευή και συντήρηση από ανθρώπους που γνωρίζουν το αντικείμενο — τίμια δουλειά, χωρίς εκπλήξεις στο λογαριασμό.</p>
+      <div class="hero-actions">
+        <a class="btn-solid" href="#booking">Κλείστε ραντεβού →</a>
+        <a class="btn-outline" href="tel:+302461027401">Καλέστε: 2461 027401</a>
+      </div>
+    </div>
+    <div class="plate">
+      <div class="plate-rating">
+        <span class="num">4.8</span>
+        <span class="stars">★★★★★</span>
+      </div>
+      <div class="plate-sub">από 81 αξιολογήσεις πελατών</div>
+      <hr>
+      <div class="plate-row"><span>Κατάσταση</span><b class="status-open">● Ανοιχτά τώρα</b></div>
+      <div class="plate-row"><span>Ωράριο</span><b>Δευ–Παρ 09:00–18:00</b></div>
+      <div class="plate-row"><span>Σαββατοκύριακο</span><b>Κλειστά</b></div>
+      <div class="plate-row"><span>Τηλέφωνο</span><b>2461 027401</b></div>
+      <div class="plate-row"><span>Διεύθυνση</span><b>Κ. Καραμανλή 30</b></div>
+    </div>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="section-inner about-grid">
+    <div>
+      <div class="section-head">
+        <div class="eyebrow">Ποιοι είμαστε</div>
+        <h2>Οικογενειακό συνεργείο, εξειδίκευση σε βάθος.</h2>
+      </div>
+      <div class="about-text">
+        <p>Το F.G.S. Service λειτουργεί στην Κοζάνη ως εξειδικευμένο συνεργείο για οχήματα Nissan, δεχόμενο παράλληλα κάθε τύπο αυτοκινήτου. Η εμπειρία και η τεχνογνωσία στα συστήματα Nissan αναφέρονται σταθερά από πελάτες ως το δυνατό σημείο του συνεργείου.</p>
+        <p>Πελάτες περιγράφουν έμπιστη και ειλικρινή εξυπηρέτηση, με λύσεις σε δύσκολα μηχανολογικά προβλήματα — από θόρυβο σε ρουλεμάν διαφορικού μέχρι πλήρες service συντήρησης.</p>
+      </div>
+      <div class="tag-row">
+        <span class="tag">Nissan specialist</span>
+        <span class="tag">Γενικό συνεργείο</span>
+        <span class="tag">Διαγνωστικός έλεγχος</span>
+        <span class="tag">Κοζάνη</span>
+      </div>
+    </div>
+    <div class="fact-card">
+      <h3>Στοιχεία συνεργείου</h3>
+      <ul class="fact-list">
+        <li><span class="k">Επωνυμία</span><span class="v">FGS SERVICE — ΣΠΑΝΟΣ Ι. ΓΚΙΟΥΡΑΣ Ν. Ο.Ε.</span></li>
+        <li><span class="k">Διεύθυνση</span><span class="v">Κ. Καραμανλή 30, Κοζάνη 501 00</span></li>
+        <li><span class="k">Plus code</span><span class="v">8R34+G6 Κοζάνη</span></li>
+        <li><span class="k">Τηλέφωνο</span><span class="v">2461 027401</span></li>
+        <li><span class="k">Βαθμολογία</span><span class="v">4.8 / 5 (81 κριτικές)</span></li>
+        <li><span class="k">Ωράριο</span><span class="v">Δευ–Παρ 09:00–18:00</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="services" id="services">
+  <div class="section-inner">
+    <div class="section-head">
+      <div class="eyebrow">Τι κάνουμε</div>
+      <h2>Υπηρεσίες συνεργείου</h2>
+      <p>Πλήρης κάλυψη μηχανολογικών εργασιών, με έμφαση στη σωστή διάγνωση πριν από κάθε επέμβαση.</p>
+    </div>
+    <div class="svc-grid">
+
+      <div class="svc-card">
+        <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2-2z"/></svg>
+        <h3>Γενικό service Nissan</h3>
+        <p>Προγραμματισμένη συντήρηση και έλεγχος με εξειδικευμένη γνώση των συστημάτων Nissan.</p>
+      </div>
+
+      <div class="svc-card">
+        <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        <h3>Διαγνωστικός έλεγχος</h3>
+        <p>Εντοπισμός βλάβης πριν από κάθε επέμβαση, ώστε να επισκευάζεται το πραγματικό πρόβλημα.</p>
+      </div>
+
+      <div class="svc-card">
+        <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></svg>
+        <h3>Διαφορικό &amp; μετάδοση</h3>
+        <p>Έλεγχος και επισκευή διαφορικού, ρουλεμάν και συστήματος μετάδοσης κίνησης.</p>
+      </div>
+
+      <div class="svc-card">
+        <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 14a4 4 0 1 1 4-4M4 14h12M4 14v3h16v-3M14 10a4 4 0 1 1 4 4"/></svg>
+        <h3>Αλλαγή λαδιών &amp; φίλτρων</h3>
+        <p>Λάδια κινητήρα, φίλτρο λαδιού, αέρα και καμπίνας, σύμφωνα με τις προδιαγραφές του οχήματος.</p>
+      </div>
+
+      <div class="svc-card">
+        <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="6" width="16" height="12" rx="1"/><path d="M8 6V4h8v2M9 10h1M14 10h1M9 14h1M14 14h1"/></svg>
+        <h3>Σύστημα ψύξης</h3>
+        <p>Έλεγχος και αντικατάσταση ψυγείου, θερμοστάτη και υγρών ψύξης κινητήρα.</p>
+      </div>
+
+      <div class="svc-card">
+        <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="8" width="15" height="8" rx="1"/><path d="M18 10h2v4h-2M6 8V6M10 8V6"/></svg>
+        <h3>Ηλεκτρολογικός έλεγχος</h3>
+        <p>Μπαταρία, δυναμό, μίζα και γενικός ηλεκτρολογικός έλεγχος οχήματος.</p>
+      </div>
+
+      <div class="svc-card">
+        <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 20l2-8h10l2 8M7 12l1.5-6h7L17 12M9 16h.01M15 16h.01"/></svg>
+        <h3>Ανάρτηση &amp; αμορτισέρ</h3>
+        <p>Έλεγχος και αντικατάσταση αμορτισέρ, τραβερσών και εξαρτημάτων ανάρτησης.</p>
+      </div>
+
+      <div class="svc-card">
+        <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l7 4v5c0 5-3.5 8-7 9-3.5-1-7-4-7-9V7z"/></svg>
+        <h3>Παντός τύπου όχημα</h3>
+        <p>Εκτός από Nissan, δεχόμαστε στο συνεργείο κάθε μάρκα και μοντέλο αυτοκινήτου.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="reviews" id="reviews">
+  <div class="section-inner">
+    <div class="section-head">
+      <div class="eyebrow">Τι λένε οι πελάτες</div>
+      <h2>4.8 αστέρια, 81 αξιολογήσεις</h2>
+      <p>Ενδεικτικές εντυπώσεις πελατών από το Google Maps.</p>
+    </div>
+    <div class="rev-grid">
+      <div class="rev-card">
+        <div class="rev-stars">★★★★★</div>
+        <p class="quote">Οι ιδιοκτήτες γνωρίζουν σε βάθος την τεχνολογία των Nissan και προτείνουν λύσεις στα περισσότερα προβλήματα. Ένα από τα καλύτερα συνεργεία της Δυτικής Μακεδονίας.</p>
+        <div class="rev-name">— Λάμπης Τ.</div>
+      </div>
+      <div class="rev-card">
+        <div class="rev-stars">★★★★★</div>
+        <p class="quote">Τίμιοι άνθρωποι με καλή γνώση του αντικειμένου. Τους εμπιστεύεται ο πελάτης όποιο αυτοκίνητο κι αν έχει.</p>
+        <div class="rev-name">— Σταμάτης Σ.</div>
+      </div>
+      <div class="rev-card">
+        <div class="rev-stars">★★★★★</div>
+        <p class="quote">Από τα καλύτερα συνεργεία στην Κοζάνη και στη Δυτική Μακεδονία, σύμφωνα με τους θαμώνες του.</p>
+        <div class="rev-name">— Ιωάννης Φ.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="booking" id="booking">
+  <div class="section-inner">
+    <div class="section-head">
+      <div class="eyebrow">Κλείστε ραντεβού</div>
+      <h2>Ζητήστε ραντεβού</h2>
+      <p>Στείλτε μας τα στοιχεία του οχήματος και την εργασία που χρειάζεστε. Το αίτημα θα σταλεί με email στο συνεργείο — θα επικοινωνήσουμε μαζί σας για να επιβεβαιώσουμε ημέρα και ώρα.</p>
+    </div>
+
+    <div class="book-wrap">
+      <div class="book-form">
+
+        <div class="field">
+          <label for="fname">Ονοματεπώνυμο</label>
+          <input type="text" id="fname" placeholder="π.χ. Γιώργος Παπαδόπουλος">
+        </div>
+
+        <div class="field">
+          <label for="fphone">Τηλέφωνο επικοινωνίας</label>
+          <input type="tel" id="fphone" placeholder="π.χ. 6912345678">
+        </div>
+
+        <div class="field">
+          <label for="fcar">Όχημα (μάρκα / μοντέλο)</label>
+          <input type="text" id="fcar" placeholder="π.χ. Nissan Qashqai 2016">
+        </div>
+
+        <div class="field">
+          <label for="fservice">Είδος εργασίας</label>
+          <select id="fservice">
+            <option value="Γενικό service">Γενικό service</option>
+            <option value="Διαγνωστικός έλεγχος">Διαγνωστικός έλεγχος</option>
+            <option value="Διαφορικό / μετάδοση κίνησης">Διαφορικό / μετάδοση κίνησης</option>
+            <option value="Αλλαγή λαδιών & φίλτρων">Αλλαγή λαδιών &amp; φίλτρων</option>
+            <option value="Σύστημα ψύξης / ψυγείο">Σύστημα ψύξης / ψυγείο</option>
+            <option value="Ηλεκτρολογικός έλεγχος">Ηλεκτρολογικός έλεγχος</option>
+            <option value="Ανάρτηση / αμορτισέρ">Ανάρτηση / αμορτισέρ</option>
+            <option value="Άλλο">Άλλο (θα διευκρινιστεί)</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="fwhen">Προτιμώμενη ημέρα / ώρα</label>
+          <input type="text" id="fwhen" placeholder="π.χ. Τετάρτη πρωί, ή όποτε βολεύει">
+        </div>
+
+        <div class="field">
+          <label for="fnotes">Σχόλια (προαιρετικό)</label>
+          <textarea id="fnotes" placeholder="π.χ. θόρυβος στο διαφορικό, βρίσκομαι εκτός πόλης το πρωί κ.λπ."></textarea>
+        </div>
+
+      </div>
+
+      <div class="book-summary">
+        <label style="font-family:'JetBrains Mono',monospace;font-size:11.5px;text-transform:uppercase;letter-spacing:0.06em;color:var(--yellow);display:block;margin-bottom:12px;">Σύνοψη αιτήματος</label>
+        <div class="summary-ticket" id="ticket">
+          <div class="row"><span>Όνομα</span><span id="tName">—</span></div>
+          <div class="row"><span>Τηλέφωνο</span><span id="tPhone">—</span></div>
+          <div class="row"><span>Όχημα</span><span id="tCar">—</span></div>
+          <div class="row"><span>Εργασία</span><span id="tService">Γενικό service</span></div>
+          <div class="row"><span>Επιθυμητό ραντεβού</span><span id="tWhen">—</span></div>
+        </div>
+
+        <button class="send-btn" id="sendBtn">Αποστολή αιτήματος με email</button>
+
+        <p class="fallback-note">
+          Το κουμπί ανοίγει το email σας με προσυμπληρωμένο μήνυμα προς <b style="color:var(--off-white)">fgsservicekozani@gmail.com</b>. Για άμεση εξυπηρέτηση, καλέστε: <a href="tel:+302461027401">2461 027401</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="location" id="location">
+  <div class="section-inner loc-grid">
+    <div class="loc-card">
+      <h3>Επικοινωνία &amp; τοποθεσία</h3>
+      <div class="loc-line">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s7-6.4 7-12a7 7 0 1 0-14 0c0 5.6 7 12 7 12z"/><circle cx="12" cy="9" r="2.4"/></svg>
+        <div class="v"><b>Κ. Καραμανλή 30</b><br>Κοζάνη 501 00 · Plus code 8R34+G6</div>
+      </div>
+      <div class="loc-line">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 3a2 2 0 0 1-.5 2L8 10a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2-.5c1 .3 2 .5 3 .7a2 2 0 0 1 1.7 2z"/></svg>
+        <div class="v"><b>2461 027401</b><br>Κλήση</div>
+      </div>
+      <div class="loc-line">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"/><path d="M3 6.5l9 6.5 9-6.5"/></svg>
+        <div class="v"><b><a href="mailto:fgsservicekozani@gmail.com" style="color:inherit;">fgsservicekozani@gmail.com</a></b><br>Email</div>
+      </div>
+      <div class="loc-line">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        <div class="v"><b>Δευτέρα – Παρασκευή</b><br>09:00 – 18:00 (Σαββατοκύριακο κλειστά)</div>
+      </div>
+      <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=F.G.S.+SERVICE+Kozani&query_place_id=ChIJ1_Cnj2DSWRMRQRcey-ZxlxQ" target="_blank" rel="noopener">Δείτε στο Google Maps →</a>
+    </div>
+
+    <div>
+      <div class="section-head" style="margin-bottom:20px;">
+        <div class="eyebrow">Ωράριο</div>
+        <h2 style="font-size:28px;">Εβδομαδιαίο πρόγραμμα</h2>
+      </div>
+      <table class="hours-table" id="hoursTable">
+        <tr data-day="1"><td>Δευτέρα</td><td>09:00 – 18:00</td></tr>
+        <tr data-day="2"><td>Τρίτη</td><td>09:00 – 18:00</td></tr>
+        <tr data-day="3"><td>Τετάρτη</td><td>09:00 – 18:00</td></tr>
+        <tr data-day="4"><td>Πέμπτη</td><td>09:00 – 18:00</td></tr>
+        <tr data-day="5"><td>Παρασκευή</td><td>09:00 – 18:00</td></tr>
+        <tr data-day="6"><td>Σάββατο</td><td>Κλειστά</td></tr>
+        <tr data-day="0"><td>Κυριακή</td><td>Κλειστά</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div><b>F.G.S. SERVICE</b> — ΣΠΑΝΟΣ Ι. — ΓΚΙΟΥΡΑΣ Ν. Ο.Ε. · Κ. Καραμανλή 30, Κοζάνη 501 00 · 2461 027401</div>
+  <div style="margin-top:8px;">Στοιχεία και βαθμολογία από δημόσιες καταχωρίσεις Google Maps. Οι διαθέσιμες ώρες στη φόρμα ραντεβού είναι ενδεικτικές — επιβεβαιώστε τηλεφωνικά.</div>
+</footer>
+
+<script>
+  const todayIdx = new Date().getDay();
+  document.querySelectorAll('#hoursTable tr').forEach(tr=>{
+    if (parseInt(tr.dataset.day) === todayIdx) tr.classList.add('today');
+  });
+
+  const dowNames = ['Κυρ','Δευ','Τρι','Τετ','Πεμ','Παρ','Σαβ'];
+  const monthNames = ['Ιαν','Φεβ','Μαρ','Απρ','Μαϊ','Ιουν','Ιουλ','Αυγ','Σεπ','Οκτ','Νοε','Δεκ'];
+
+  const daysStrip = document.getElementById('daysStrip');
+  const days = [];
+  let cursor = new Date();
+  while (days.length < 10) {
+    const d = cursor.getDay();
+    if (d !== 0 && d !== 6) days.push(new Date(cursor));
+    cursor.setDate(cursor.getDate() + 1);
+  }
+
+  let selectedDay = null;
+  let selectedTime = null;
+
+  days.forEach((d, i) => {
+    const pill = document.createElement('div');
+    pill.className = 'day-pill';
+    pill.innerHTML = `<span class="dow">${dowNames[d.getDay()]}</span>${d.getDate()} ${monthNames[d.getMonth()]}`;
+    pill.addEventListener('click', () => {
+      document.querySelectorAll('.day-pill').forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      selectedDay = d;
+      document.getElementById('tDay').textContent = `${dowNames[d.getDay()]} ${d.getDate()}/${d.getMonth()+1}`;
+      updateSendState();
+    });
+    daysStrip.appendChild(pill);
+    if (i === 0) pill.click();
+  });
+
+  const slotGrid = document.getElementById('slotGrid');
+  const slots = [];
+  for (let h = 9; h < 18; h++) {
+    slots.push(`${String(h).padStart(2,'0')}:00`);
+    if (h < 17) slots.push(`${String(h).padStart(2,'0')}:30`);
+  }
+  slots.push('17:30');
+  slots.forEach(t => {
+    const s = document.createElement('div');
+    s.className = 'slot';
+    s.textContent = t;
+    s.addEventListener('click', () => {
+      document.querySelectorAll('.slot').forEach(x => x.classList.remove('active'));
+      s.classList.add('active');
+      selectedTime = t;
+      document.getElementById('tTime').textContent = t;
+      updateSendState();
+    });
+    slotGrid.appendChild(s);
+  });
+
+  const fname = document.getElementById('fname');
+  const fphone = document.getElementById('fphone');
+  const fcar = document.getElementById('fcar');
+  const fservice = document.getElementById('fservice');
+  const fnotes = document.getElementById('fnotes');
+
+  fname.addEventListener('input', () => document.getElementById('tName').textContent = fname.value || '—');
+  fphone.addEventListener('input', () => document.getElementById('tPhone').textContent = fphone.value || '—');
+  fcar.addEventListener('input', () => document.getElementById('tCar').textContent = fcar.value || '—');
+  fservice.addEventListener('change', () => document.getElementById('tService').textContent = fservice.value);
+
+  const sendBtn = document.getElementById('sendBtn');
+
+  function updateSendState(){
+    if (selectedDay && selectedTime) {
+      sendBtn.disabled = false;
+      sendBtn.textContent = 'Αποστολή αιτήματος με SMS';
+    } else {
+      sendBtn.disabled = true;
+      sendBtn.textContent = 'Επιλέξτε ημέρα & ώρα';
+    }
+  }
+
+  sendBtn.addEventListener('click', () => {
+    if (!selectedDay || !selectedTime) return;
+    const dayLabel = `${dowNames[selectedDay.getDay()]} ${selectedDay.getDate()}/${selectedDay.getMonth()+1}`;
+    const name = fname.value.trim() || '(δεν δόθηκε όνομα)';
+    const phone = fphone.value.trim() || '(δεν δόθηκε τηλέφωνο)';
+    const car = fcar.value.trim() || '(δεν δόθηκε όχημα)';
+    const service = fservice.value;
+    const notes = fnotes.value.trim();
+
+    let body = `Αίτημα ραντεβού - F.G.S. Service%0A`
+      + `Ημέρα/Ώρα: ${dayLabel}, ${selectedTime}%0A`
+      + `Όνομα: ${name}%0A`
+      + `Τηλέφωνο: ${phone}%0A`
+      + `Όχημα: ${car}%0A`
+      + `Εργασία: ${service}`;
+    if (notes) body += `%0AΣχόλια: ${notes}`;
+
+    const smsUrl = `sms:+302461027401?&body=${body}`;
+    window.location.href = smsUrl;
+  });
+
+  updateSendState();
+</script>
+
+</body>
+</html>
