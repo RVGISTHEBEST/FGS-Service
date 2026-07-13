@@ -516,7 +516,7 @@
         <button class="send-btn" id="sendBtn">Αποστολή αιτήματος με email</button>
 
         <p class="fallback-note">
-          Το κουμπί ανοίγει το email σας με προσυμπληρωμένο μήνυμα προς <b style="color:var(--off-white)">fgsservicekozani@gmail.com</b>. Για άμεση εξυπηρέτηση, καλέστε: <a href="tel:+302461027401">2461 027401</a>.
+          Το κουμπί ανοίγει το Gmail σε νέα καρτέλα με προσυμπληρωμένο μήνυμα προς <b style="color:var(--off-white)">fgsservicekozani@gmail.com</b>. Αν δεν είστε συνδεδεμένοι στο Gmail, θα σας ζητηθεί σύνδεση πρώτα. Για άμεση εξυπηρέτηση, καλέστε: <a href="tel:+302461027401">2461 027401</a>.
         </p>
       </div>
     </div>
@@ -575,102 +575,45 @@
     if (parseInt(tr.dataset.day) === todayIdx) tr.classList.add('today');
   });
 
-  const dowNames = ['Κυρ','Δευ','Τρι','Τετ','Πεμ','Παρ','Σαβ'];
-  const monthNames = ['Ιαν','Φεβ','Μαρ','Απρ','Μαϊ','Ιουν','Ιουλ','Αυγ','Σεπ','Οκτ','Νοε','Δεκ'];
-
-  const daysStrip = document.getElementById('daysStrip');
-  const days = [];
-  let cursor = new Date();
-  while (days.length < 10) {
-    const d = cursor.getDay();
-    if (d !== 0 && d !== 6) days.push(new Date(cursor));
-    cursor.setDate(cursor.getDate() + 1);
-  }
-
-  let selectedDay = null;
-  let selectedTime = null;
-
-  days.forEach((d, i) => {
-    const pill = document.createElement('div');
-    pill.className = 'day-pill';
-    pill.innerHTML = `<span class="dow">${dowNames[d.getDay()]}</span>${d.getDate()} ${monthNames[d.getMonth()]}`;
-    pill.addEventListener('click', () => {
-      document.querySelectorAll('.day-pill').forEach(p => p.classList.remove('active'));
-      pill.classList.add('active');
-      selectedDay = d;
-      document.getElementById('tDay').textContent = `${dowNames[d.getDay()]} ${d.getDate()}/${d.getMonth()+1}`;
-      updateSendState();
-    });
-    daysStrip.appendChild(pill);
-    if (i === 0) pill.click();
-  });
-
-  const slotGrid = document.getElementById('slotGrid');
-  const slots = [];
-  for (let h = 9; h < 18; h++) {
-    slots.push(`${String(h).padStart(2,'0')}:00`);
-    if (h < 17) slots.push(`${String(h).padStart(2,'0')}:30`);
-  }
-  slots.push('17:30');
-  slots.forEach(t => {
-    const s = document.createElement('div');
-    s.className = 'slot';
-    s.textContent = t;
-    s.addEventListener('click', () => {
-      document.querySelectorAll('.slot').forEach(x => x.classList.remove('active'));
-      s.classList.add('active');
-      selectedTime = t;
-      document.getElementById('tTime').textContent = t;
-      updateSendState();
-    });
-    slotGrid.appendChild(s);
-  });
-
   const fname = document.getElementById('fname');
   const fphone = document.getElementById('fphone');
   const fcar = document.getElementById('fcar');
   const fservice = document.getElementById('fservice');
+  const fwhen = document.getElementById('fwhen');
   const fnotes = document.getElementById('fnotes');
 
   fname.addEventListener('input', () => document.getElementById('tName').textContent = fname.value || '—');
   fphone.addEventListener('input', () => document.getElementById('tPhone').textContent = fphone.value || '—');
   fcar.addEventListener('input', () => document.getElementById('tCar').textContent = fcar.value || '—');
   fservice.addEventListener('change', () => document.getElementById('tService').textContent = fservice.value);
+  fwhen.addEventListener('input', () => document.getElementById('tWhen').textContent = fwhen.value || '—');
 
   const sendBtn = document.getElementById('sendBtn');
 
-  function updateSendState(){
-    if (selectedDay && selectedTime) {
-      sendBtn.disabled = false;
-      sendBtn.textContent = 'Αποστολή αιτήματος με SMS';
-    } else {
-      sendBtn.disabled = true;
-      sendBtn.textContent = 'Επιλέξτε ημέρα & ώρα';
-    }
-  }
-
   sendBtn.addEventListener('click', () => {
-    if (!selectedDay || !selectedTime) return;
-    const dayLabel = `${dowNames[selectedDay.getDay()]} ${selectedDay.getDate()}/${selectedDay.getMonth()+1}`;
-    const name = fname.value.trim() || '(δεν δόθηκε όνομα)';
-    const phone = fphone.value.trim() || '(δεν δόθηκε τηλέφωνο)';
-    const car = fcar.value.trim() || '(δεν δόθηκε όχημα)';
+    const name = fname.value.trim();
+    const phone = fphone.value.trim();
+    const car = fcar.value.trim();
     const service = fservice.value;
+    const when = fwhen.value.trim();
     const notes = fnotes.value.trim();
 
-    let body = `Αίτημα ραντεβού - F.G.S. Service%0A`
-      + `Ημέρα/Ώρα: ${dayLabel}, ${selectedTime}%0A`
-      + `Όνομα: ${name}%0A`
-      + `Τηλέφωνο: ${phone}%0A`
-      + `Όχημα: ${car}%0A`
-      + `Εργασία: ${service}`;
-    if (notes) body += `%0AΣχόλια: ${notes}`;
+    if (!name || !phone) {
+      alert('Παρακαλώ συμπληρώστε τουλάχιστον όνομα και τηλέφωνο.');
+      return;
+    }
 
-    const smsUrl = `sms:+302461027401?&body=${body}`;
-    window.location.href = smsUrl;
+    const subject = `Αίτημα ραντεβού - ${name}`;
+    let body = `Όνομα: ${name}\n`
+      + `Τηλέφωνο: ${phone}\n`
+      + `Όχημα: ${car || '(δεν δόθηκε)'}\n`
+      + `Εργασία: ${service}\n`
+      + `Επιθυμητό ραντεβού: ${when || '(δεν δόθηκε)'}`;
+    if (notes) body += `\nΣχόλια: ${notes}`;
+
+    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=fgsservicekozani@gmail.com&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.open(gmailUrl, '_blank');
   });
-
-  updateSendState();
 </script>
 
 </body>
